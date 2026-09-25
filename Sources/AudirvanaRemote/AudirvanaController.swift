@@ -94,9 +94,17 @@ final class AudirvanaController: ObservableObject {
     // MARK: - State refresh
 
     func refresh() {
+        let wasRunning = isRunning
         isRunning = NSRunningApplication
             .runningApplications(withBundleIdentifier: Self.bundleID)
             .isEmpty == false
+
+        if isRunning != wasRunning {
+            MenuBarController.shared.setVisible(isRunning)
+            if !isRunning {
+                WindowManager.shared.closeDetachedWindow()
+            }
+        }
 
         guard isRunning else {
             playerState = "Not Running"
