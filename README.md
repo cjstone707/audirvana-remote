@@ -4,6 +4,10 @@ A lightweight macOS menu bar remote control for [Audirvana Origin](https://audir
 
 Built with Swift and AppKit/SwiftUI, driving Audirvana via AppleScript/AppleEvents.
 
+<p align="center">
+  <img src="docs/screenshot.png" alt="AudirvanaRemote detached window showing Box Of Rain by Grateful Dead" width="320">
+</p>
+
 ## Features
 
 - **Menu bar popover** — now-playing artwork, title, artist, album, and derived audio quality (bit depth / sample rate / codec), with transport controls (play/pause, previous/next), a seek bar, and a volume slider.
