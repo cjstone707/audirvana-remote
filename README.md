@@ -6,6 +6,7 @@ Built with Swift and AppKit/SwiftUI, driving Audirvana via AppleScript/AppleEven
 
 <p align="center">
   <img src="docs/screenshot.png" alt="AudirvanaRemote detached window showing Box Of Rain by Grateful Dead" width="320">
+  <img src="docs/screenshot-tracks.png" alt="AudirvanaRemote with the Album Tracks list expanded" width="320">
 </p>
 
 ## Features
