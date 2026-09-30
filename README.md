@@ -63,4 +63,4 @@ AudirvanaRemote sends AppleEvents to Audirvana Origin's AppleScript dictionary (
 
 ## License
 
-No license specified yet — all rights reserved by default. Add a `LICENSE` file if you want to open this up for reuse.
+MIT — see [LICENSE](LICENSE).
