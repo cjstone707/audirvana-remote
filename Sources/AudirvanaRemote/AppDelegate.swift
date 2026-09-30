@@ -8,14 +8,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
         registerAsLoginItemIfNeeded()
         controller.hideAudirvana()
-        // Set up the menu bar item (and its initial visibility, matched to whether
-        // Audirvana is running yet) before polling starts, so the very first refresh()
-        // has something to show/hide rather than racing the item's creation.
-        MenuBarController.shared.setup(controller: controller)
-        controller.startPolling()
-        // Defensive: close any window the placeholder Settings scene might auto-open.
-        DispatchQueue.main.async {
+        // Defensive: close any window the placeholder Settings scene might auto-open —
+        // BEFORE creating the status item, not after. NSStatusItem is itself backed by a
+        // scene/window in this AppKit version (visible in Console as
+        // "com.apple.appkit.status-items:<uuid>" / NSMenuBarNavigationSceneExtension), so
+        // running this sweep after setup() was closing the status item's own window right
+        // after creating it: the icon kept rendering (a compositor artifact) but its window
+        // was dead, so it silently swallowed every click — no crash, no log, nothing.
+        // Deferring the whole launch sequence into this async block still lets the
+        // placeholder Settings window (if any) finish opening first, so it's still there
+        // to be swept, while guaranteeing the status item is created afterward, not before.
+        DispatchQueue.main.async { [self] in
             NSApp.windows.forEach { $0.close() }
+            // Set up the menu bar item (and its initial visibility, matched to whether
+            // Audirvana is running yet) before polling starts, so the very first refresh()
+            // has something to show/hide rather than racing the item's creation.
+            MenuBarController.shared.setup(controller: controller)
+            controller.startPolling()
         }
     }
 
